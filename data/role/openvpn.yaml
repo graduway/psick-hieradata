@@ -1,0 +1,93 @@
+---
+psick::base::linux_classes:
+  packages: psick::packages
+  mail: postfix
+psick::profiles::linux_classes:
+  openvpn: openvpn
+  fw: psick::firewall::iptables
+  fail2ban: fail2ban
+
+
+psick::packages::packages_list:
+  - mailutils
+  - sharutils
+  - python-minimal
+
+psick::firewall::iptables::extra_rules:
+  - '-I INPUT -p tcp -m state --state NEW -m tcp --dport 1194 -j ACCEPT'
+psick::firewall::iptables::nat_rules:
+  - "-I POSTROUTING -s 10.%{::vpn_octets}.0/24 -j MASQUERADE"
+psick::firewall::iptables::manage_ipv6: false
+
+psick::sysctl::settings_hash:
+  net.ipv4.ip_forward: 1
+  net.ipv4.conf.default.rp_filter: 0
+  net.ipv4.conf.all.rp_filter: 0
+  net.ipv4.conf.all.send_redirects: 0
+  net.ipv4.conf.default.send_redirects: 0
+  net.ipv4.icmp_ignore_bogus_error_responses: 1
+  net.ipv4.conf.default.log_martians: 0
+
+openvpn::servers:
+  'graduway-vpn':
+    country: 'IL'
+    province: 'TLV'
+    city: 'Raanana'
+    organization: 'Graduway'
+    email: 'development@graduway.com'
+    server: "10.%{::vpn_octets}.0 255.255.255.0"
+    push: ["route %{::vpc_subnet}"]
+
+openvpn::server_defaults:
+ logfile: "/var/log/openvpn.log"
+
+openvpn::client_defaults:
+  server: 'graduway-vpn'
+  remote_host: "vpn.%{::env_region}.graduway.com"
+  mail_from: "devops@graduway.com"
+  mail_domain: "graduway.com"
+  environment: "%{::env_region}"
+openvpn::clients:
+  'adam.genschaft': {}
+  'adi.efrat': {}
+  'amir.algazi': {}
+  'alexei.krupnik': {}
+  'antony.gelberg': {}
+  'inna.azimov': {}
+  'kathy.davidovich': {}
+  'liran.shabi': {}
+  'michael.zaslavsky': {}
+  'mor.smadja': {}
+  'shachar': 
+    mail_address: "shapi78@gmail.com"
+  'udi.mazor': {}
+
+postfix::main_config:
+  myorigin: '$mydomain'
+  myhostname: "vpn.%{::env}.graduway.com"
+  mydomain: "graduway.com"
+  append_dot_mydomain: "no"
+  smtp_sasl_auth_enable: "yes"
+  smtp_sasl_password_maps: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAmxTdIAG5+BiOf0PyXQVGGE47Ok8SmlusCYwcoxe3U7vx8GpvE94SRcbmJeZTtjK4OPKAkonhrAHt+agG/27a/lV397k7zbkYGlOsRLtrw6npMPNCMi1WoBN2hg6M14K/r8REZVJsD9bI88Q5Uz0DympfSR08eX3UaJtBgx0Dzg3a1TkX6BnWidvzLCAV1Rj9eWpLB6Y1q8zIMwn3gysm6/yvHxuig/p9hw97/+pljdc/TNzQLZkIoswKjaa2fruZyWQ2hztfRzBjx7SXz/zd2qoboyEUrsiNJfqYZZ8D5YoU4oD2GZ+5IaF8YexsDD1RuZPVlxMzAmKnSfv/GnTQ3TCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQkpMmHtMH2gawN3iCHrhXTIBgknUV6e1MtMxFW1g1dkdkEdhX5kiXy3R8jNdWDnCnbu9y3wvChaifb8zTLaqhR8yuiJLVvR8pS7zI2FZ+g5X4bhBXTKzDNSAGbsptTsmh8bw4rOwI71brWMrkWfXNKpry]
+  smtp_sasl_security_options: "noanonymous"
+  smtp_sasl_tls_security_options: "noanonymous"
+  smtp_tls_security_level: encrypt
+  header_size_limit: 4096000
+  relayhost: "[smtp.sendgrid.net]:587"
+
+fail2ban::package_ensure: 'latest'
+fail2ban::config_file_template: "fail2ban/%{::lsbdistcodename}/etc/fail2ban/jail.conf.erb"
+fail2ban::sender: "fail2ban@graduway.com"
+fail2ban::email: "shapi78@gmail.com"
+fail2ban::jails:
+  - 'ssh'
+  - 'ssh-ddos'
+fail2ban::custom_jails:
+  'openvpn':
+    filter_failregex: '* <HOST>:[0-9]{4,5} Connection reset, restarting \[[0-9]{1,2}\]'
+    port: "1194"
+    logpath: '/var/log/openvpn.log'
+    maxretry: 3
+    protocol: "udp"
+    findtime: 120
+    bantime: 1200
