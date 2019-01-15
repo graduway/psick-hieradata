@@ -1,7 +1,7 @@
 ---
 psick::base::linux_classes:
   jenkins: psick::jenkins
-  openssh: psick::openssh
+  jenkins_casc: psick::jenkins::jcasc
   profile_env: profile::profile
 psick::profiles::linux_classes:
   jenkins: ''
