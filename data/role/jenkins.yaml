@@ -7,11 +7,13 @@ psick::profiles::linux_classes:
   jenkins: ''
 
 psick::jenkins::disable_setup_wizard: true
-psick::jenkins::admin_password: 'aam5oaQu'
+psick::jenkins::admin_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEATCj81Q+gBL86HsVCimdXdmCKe0RRXeafKGBGi+b8IydtMPeUr9855alCTtcpUbIXNEvgOPL3ybsZ8mWGz9ZGn2zj4ux1077kkoKivvQ5dznQJGWMSeNXBVDH9aW0cACkHc3vvnMrO4lMyqREz7GkjZkZ8LWahAFG2ILjo2LUcHBY+PXyRAiOZXN1EFterGyiaRJ/x7KuXTPWaQgGo+rFH2z7agh+aUziZN3t4Gd/T8TxBIfOprIkehRXSQBZJflj7jrW9PpViBAJL7/MpVPjqxNHO4qWn1d7aNKIW479uj/D/Iu+pRhzcPiqlrgiaaZmsiPbIunpgX8zkrcUpPOfpjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCUOns1dg770kVgz3Jm7XNPgBATBR7F1nDiE0oIJgW1NzN0]
 
 profile::profile::scripts: 
   ec2_tags:
     template: 'profile/aws.tags.erb'
+
+psick::jenkins::jcasc::config_template: 'hieradata/jenkins.yaml.erb'
 ### SSH Key for SCM Sync
 psick::openssh::configs_hash:
   jenkins-config:
