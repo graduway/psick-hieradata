@@ -1,0 +1,167 @@
+plugins:
+  sites:
+  - id: "default"
+    url: "https://updates.jenkins.io/update-center.json"
+jenkins:
+  systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code Plugin\n\n"
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  mode: NORMAL
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  quietPeriod: 5
+  scmCheckoutRetryCount: 0
+  slaveAgentPort: 50000
+  views:
+  - all:
+      name: "all"
+  clouds:
+  - amazonEC2:
+      cloudName: "ec2_slave"
+      credentialsId: ""
+      instanceCapStr: "2"
+      privateKey: |
+<%= @options_hash['windows_slave_private_key'] %>
+      region: "<%= @ec2_metadata['placement']['availability-zone'][0..-2] %>"
+      roleArn: ""
+      roleSessionName: ""
+      useInstanceProfileForCredentials: true
+      templates:
+      - ami: "<%= @options_hash['windows_slave_ami'] %>"
+        amiType:
+          windowsData:
+            bootDelay: "3"
+            password: "<%= @options_hash['windows_slave_password'] %>"
+            useHTTPS: false
+        zone: "<%= @ec2_metadata['placement']['availability-zone'] %>"
+        description: "windows-server-2012"
+        securityGroups: "<%= @options_hash['windows_slave_securityGroups'] %>"
+        remoteFS: "c:\\jenkins"
+        type: "<%= @options_hash['windows_slave_type'] %>"
+        ebsOptimized: false
+        labelString: "windows-server-2012"
+        mode: "NORMAL"
+        initScript: ""
+        tmpDir: ""
+        numExecutors: 3
+        remoteAdmin: "Administrator"
+        subnetId: "<%= @ec2_metadata['network']['interfaces']['macs'][@ec2_metadata['network']['interfaces']['macs'].keys[0]]['subnet-id'] %>"
+        idleTerminationMinutes: "6000"
+        iamInstanceProfile: "arn:aws:iam::<%= @ec2_metadata['network']['interfaces']['macs'][@ec2_metadata['network']['interfaces']['macs'].keys[0]]['owner-id'] %>:instance-profile/jenkins-slave-dev"
+        deleteRootOnTermination: true
+        useEphemeralDevices: false
+        customDeviceMapping: "/dev/sda1=:125"
+        instanceCapStr: "2"
+        stopOnTerminate: false
+        usePrivateDnsName: false
+        associatePublicIp: false
+        useDedicatedTenancy: false
+        launchTimeoutStr: "0"
+        connectBySSHProcess: false
+        connectUsingPublicIp: false
+        tags:
+        <%- @options_hash['windows_slave_tags'].each do |tag, val| -%>
+        - name: "<%= tag %>"
+          value: "<%= val %>"
+        <%- end -%>
+        userData: |
+          <powershell>
+
+          Set-ExecutionPolicy Unrestricted -Scope LocalMachine -Force -ErrorAction Ignore
+
+          # Set admin password
+          net user Administrator <%= @options_hash['windows_slave_password'] %>
+
+          # Don't set this before Set-ExecutionPolicy as it throws an error
+          $ErrorActionPreference = "stop"
+          $bucket = "gw-devops-public"
+          $javafile = "jre-windows-x64.exe"
+          $puppetfile = "puppet-agent-6.1.0-x64.msi"
+          $tmpfolder = $env:temp
+          $temppath = "$tmpfolder\$javafile"
+          $puppetpath = "$tmpfolder\$puppetfile"
+          read-s3object -BucketName $bucket -key $javafile -File $temppath 
+          Start-Process -FilePath $temppath -ArgumentList  "/s"  -Wait -Verbose -PassThru
+          Start-Sleep -s 35
+          read-s3object -BucketName $bucket -key $puppetfile -File $puppetpath
+
+          $install_args = @("/qn", "/norestart","/i", $puppetpath)
+          $process = Start-Process -FilePath msiexec.exe -ArgumentList $install_args -Wait -PassThru
+          Start-Sleep -s 35
+
+          cmd.exe /c winrm quickconfig -q
+          winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="8192"}'
+          winrm set winrm/config/winrs '@{MaxProcessesPerShell="4096"}'
+          winrm set winrm/config '@{MaxTimeoutms="1800000"}'
+          winrm set winrm/config/service '@{AllowUnencrypted="true"}'
+          winrm set winrm/config/service/auth '@{Basic="true"}'
+          winrm set winrm/config/client '@{AllowUnencrypted="true"}'
+          winrm set winrm/config/client/auth '@{Basic="true"}'
+
+          netsh advfirewall firewall add rule name="WinRM 5985" protocol=TCP dir=in localport=5985 action=allow
+          netsh advfirewall firewall add rule name="WinRM 5986" protocol=TCP dir=in localport=5986 action=allow
+
+          net stop winrm
+          sc.exe config winrm start=auto
+          net start winrm
+          </powershell>
+security:
+  remotingCLI:
+    enabled: false
+unclassified:
+  location:
+    url: "http://localhost:8080/"
+jobs:
+  - script: >
+      pipelineJob('web') {
+       definition {
+        cpsScm {
+            scm {
+              git{ remote({
+                           url('git@web.sshconfig:graduway/web.git')
+                          })
+                   branches('refs/heads/antony-ci')
+                 }
+            }
+        }
+        }
+      }
+  - script: >
+      pipelineJob('frontend') {
+       definition {
+        cpsScm {
+            scm {
+              git{ remote({
+                           url('git@frontend.sshconfig:graduway/frontend.git')
+                          })
+                   branches('*/jenkinsfile')
+                 }
+            }
+        }
+        }
+      }
+  - script: >
+      pipelineJob('control') {
+       definition {
+        cpsScm {
+            scm {
+              git{ remote({
+                           url('git@ci-control.sshconfig:graduway/ci-control.git')
+                          })
+                   branches('*/antony-ci')
+                 }
+            }
+        }
+        }
+      }
+

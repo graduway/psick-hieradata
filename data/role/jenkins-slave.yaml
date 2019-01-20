@@ -17,7 +17,7 @@ profile::route53::hostname: "%{::role}"
 profile::route53::ip_address: "%{::ipaddress}"
 
 # Do not try to install openssh on Windows via tp
-psick::openssh::use_tp: false
+psick::openssh::tp::manage: false
 
 psick::packages::resource_default_arguments:
   provider: chocolatey
@@ -37,6 +37,7 @@ psick::packages::packages_list:
   - "unzip"
   - "webdeploy"
   - "zip"
+  - "openssh"
 
 # SSH Key for WEB Github sync
 
