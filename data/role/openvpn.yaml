@@ -34,7 +34,7 @@ openvpn::servers:
     province: 'TLV'
     city: 'Raanana'
     organization: 'Graduway'
-    email: 'development@graduway.com'
+    email: 'noreply@graduway.com'
     server: "10.%{::vpn_octets}.0 255.255.255.0"
     push: ["route %{::vpc_subnet}"]
 
@@ -44,11 +44,10 @@ openvpn::server_defaults:
 openvpn::client_defaults:
   server: 'graduway-vpn'
   remote_host: "vpn.%{::env_region}.graduway.com"
-  mail_from: "devops@graduway.com"
+  mail_from: "noreply@graduway.com"
   mail_domain: "graduway.com"
   environment: "%{::env_region}"
 openvpn::clients:
-  'adam.genschaft': {}
   'adi.efrat': {}
   'amir.algazi': {}
   'alexei.krupnik': {}
@@ -56,15 +55,15 @@ openvpn::clients:
   'inna.azimov': {}
   'kathy.davidovich': {}
   'liran.shabi': {}
+  'maxim.sternberg':
+    mail_address: "maxim.sternberg@automat-it.com"
   'michael.zaslavsky': {}
   'mor.smadja': {}
-  'shachar': 
-    mail_address: "shapi78@gmail.com"
   'udi.mazor': {}
 
 postfix::main_config:
   myorigin: '$mydomain'
-  myhostname: "vpn.%{::env}.graduway.com"
+  myhostname: "vpn.%{::env_region}.graduway.com"
   mydomain: "graduway.com"
   append_dot_mydomain: "no"
   smtp_sasl_auth_enable: "yes"
@@ -77,8 +76,8 @@ postfix::main_config:
 
 fail2ban::package_ensure: 'latest'
 fail2ban::config_file_template: "fail2ban/%{::lsbdistcodename}/etc/fail2ban/jail.conf.erb"
-fail2ban::sender: "fail2ban@graduway.com"
-fail2ban::email: "shapi78@gmail.com"
+fail2ban::sender: "noreply@graduway.com"
+fail2ban::email: "dev-leaders@graduway.com"
 fail2ban::jails:
   - 'ssh'
   - 'ssh-ddos'
