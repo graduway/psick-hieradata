@@ -100,9 +100,15 @@ jenkins:
           Start-Sleep -s 35
           read-s3object -BucketName $bucket -key $puppetfile -File $puppetpath
 
-          $install_args = @("/qn", "/norestart","/i", $puppetpath)
+          $install_args = @("/qn", "/norestart","/i", $puppetpath, "PUPPET_AGENT_STARTUP_MODE=Disabled")
           $process = Start-Process -FilePath msiexec.exe -ArgumentList $install_args -Wait -PassThru
           Start-Sleep -s 35
+          $puppet_agent_args = @("agent", "--onetime", "--verbose", "--no-daemonize", "--no-usecacheonfailure", "--no-splay", "--show_diff", "--server", "puppet")
+          Start-Process -FilePath "C:\Program Files\Puppet Labs\Puppet\bin\puppet" -ArgumentList $puppet_agent_args -Wait -PassThru
+          Start-Sleep -s 35
+          Start-Process -FilePath "C:\Program Files\Puppet Labs\Puppet\bin\puppet" -ArgumentList $puppet_agent_args -Wait -PassThru
+          sc.exe config puppet start=auto
+          net start puppet
 
           cmd.exe /c winrm quickconfig -q
           winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="8192"}'
