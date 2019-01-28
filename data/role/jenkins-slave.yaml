@@ -29,7 +29,7 @@ psick::packages::packages_list:
   - "git"
   - "visualstudio2017-workload-webbuildtools"
   - "googlechrome"
-  - "netfx-4.6.1-devpack"
+  - "netfx-4.7.2-devpack"
   - "nuget.commandline"
   - "notepadplusplus.install"
   - "nodejs-lts"
