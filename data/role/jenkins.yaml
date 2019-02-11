@@ -119,3 +119,21 @@ psick::jenkins::plugins:
   xunit:
     enable: true
 
+  # Suggested plugins
+  build-timeout:
+    enable: true
+  credentials-binding:
+    enable: true
+  timestamper:
+    enable: true
+  ws-cleanup:
+    enable: true
+  pipeline-stage-view:
+    enable: true
+  git:
+    enable: true
+  matrix-auth:
+    enable: true
+  mailer:
+    enable: true
+
