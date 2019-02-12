@@ -136,7 +136,7 @@ psick::repo::add_defaults: true
 # Time settings
 psick::time::servers:
   - pool.ntp.org
-psick::time::ntpdate::crontab: "*/5 * * * *"
+psick::time::method: ntp
 
 # Timezone settings
 psick::timezone: UTC
