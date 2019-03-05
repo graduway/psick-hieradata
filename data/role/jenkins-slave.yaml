@@ -6,6 +6,7 @@ psick::base::windows_classes:
   dns: profile::route53
   packages: psick::packages
   openssh: psick::openssh
+  windows_env: psick::windows::envs
 psick::profiles::windows_classes:
   features: psick::windows::features
   services: psick::windows::services
@@ -183,3 +184,20 @@ windows_networks:
     local_ports: '8080'
     remote_ports: "*"
     enabled: true
+psick::windows::envs::envs_hash:
+  'AWS_ENV':
+    value: "%{::ec2_tag_env}"
+    mergemode: clobber
+    user: 'Administrator'
+  'AWS_PREFIX':
+    value: "%{::ec2_tag_env_prefix}"
+    mergemode: clobber
+    user: 'Administrator'
+  'AWS_NAME':
+    value: "%{::facts.ec2_tag_name}"
+    mergemode: clobber
+    user: 'Administrator'
+  'AWS_ROLE':
+    value: "%{::facts.ec2_tag_role}"
+    mergemode: clobber
+    user: 'Administrator'
