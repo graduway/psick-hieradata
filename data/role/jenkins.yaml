@@ -9,7 +9,6 @@ psick::profiles::linux_classes:
   ssh: 'psick::openssh'
 
 psick::jenkins::disable_setup_wizard: true
-psick::jenkins::admin_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEATCj81Q+gBL86HsVCimdXdmCKe0RRXeafKGBGi+b8IydtMPeUr9855alCTtcpUbIXNEvgOPL3ybsZ8mWGz9ZGn2zj4ux1077kkoKivvQ5dznQJGWMSeNXBVDH9aW0cACkHc3vvnMrO4lMyqREz7GkjZkZ8LWahAFG2ILjo2LUcHBY+PXyRAiOZXN1EFterGyiaRJ/x7KuXTPWaQgGo+rFH2z7agh+aUziZN3t4Gd/T8TxBIfOprIkehRXSQBZJflj7jrW9PpViBAJL7/MpVPjqxNHO4qWn1d7aNKIW479uj/D/Iu+pRhzcPiqlrgiaaZmsiPbIunpgX8zkrcUpPOfpjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCUOns1dg770kVgz3Jm7XNPgBATBR7F1nDiE0oIJgW1NzN0]
 
 profile::profile::scripts: 
   ec2_tags:
@@ -136,4 +135,6 @@ psick::jenkins::plugins:
     enable: true
   mailer:
     enable: true
-
+  # Google login
+  google-login-plugin:
+    enable: true
