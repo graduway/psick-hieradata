@@ -8,13 +8,24 @@ plugins:
   - id: "default"
     url: "https://updates.jenkins.io/update-center.json"
 jenkins:
+  securityRealm:
+    googleOAuth2:
+      clientId: "<%= @options_hash['google_oauth_client_id'] %>"
+      clientSecret: "<%= @options_hash['google_oauth_client_secret'] %>"
   systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code Plugin\n\n"
   agentProtocols:
   - "JNLP4-connect"
   - "Ping"
   authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: false
+    globalMatrix:
+    grantedPermissions:
+<% @options_hash['clients_rbac'].each do |roles_list| -%>
+<% roles_list.each do |users_list| -%>
+<% users_list[1].each do |user| -%>
+      - "<%= users_list[0] %>:<%= user %>"
+<% end -%>
+<% end -%>
+<% end -%>
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: false
