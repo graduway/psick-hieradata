@@ -23,10 +23,12 @@ psick::packages::resource_default_arguments:
   provider: chocolatey
 psick::packages::packages_list:
   - "awscli"
+  - "dotnetcore-sdk"
   - "sqlserver-cmdlineutils"
   - "tortoisesvn"
   - "putty.install"
   - "git"
+  - "visualstudio2017-workload-netcorebuildtools"
   - "visualstudio2017-workload-webbuildtools"
   - "googlechrome"
   - "netfx-4.7.2-devpack"
