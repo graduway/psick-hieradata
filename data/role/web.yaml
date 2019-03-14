@@ -8,6 +8,8 @@ psick::pre::windows_classes:
   webserver: psick::iis
   chocolatey: ''
 
+psick::openssh::tp::manage: false
+
 psick::iis::features:
   'Web-WebServer':
     ensure: present
@@ -26,6 +28,7 @@ psick::packages::packages_list:
   - "urlrewrite"
   - "webdeploy"
   - "zip"
+  - "openssh"
 
 psick::windows::features::install:
   'web-mgmt-tools':
