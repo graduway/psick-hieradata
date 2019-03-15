@@ -166,7 +166,7 @@ jobs:
               git{ remote({
                            url('git@frontend.sshconfig:graduway/frontend.git')
                           })
-                   branches('*/jenkinsfile')
+                   branches('refs/heads/antony-ci')
                  }
             }
         }
@@ -180,7 +180,7 @@ jobs:
               git{ remote({
                            url('git@ci-control.sshconfig:graduway/ci-control.git')
                           })
-                   branches('*/antony-ci')
+                   branches('refs/heads/antony-ci')
                  }
             }
         }
