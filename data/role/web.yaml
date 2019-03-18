@@ -43,3 +43,5 @@ psick::windows::features::install:
     ensure: present
   'was-config-apis':
     ensure: present
+  'web-asp-net45':
+    ensure: present
