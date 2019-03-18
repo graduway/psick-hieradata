@@ -35,6 +35,8 @@ psick::windows::features::install:
     ensure: present
   'web-mgmt-service':
     ensure: present
+  'web-mgmt-console':
+    ensure: present
   'was':
     ensure: present
   'was-net-environment':
