@@ -145,6 +145,20 @@ unclassified:
     url: "http://localhost:8080/"
 jobs:
   - script: >
+      pipelineJob('db-bootstrap') {
+       definition {
+        cpsScm {
+            scm {
+              git{ remote({
+                           url('git@db-bootstrap.sshconfig:graduway/db-bootstrap.git')
+                          })
+                   branches('refs/heads/master')
+                 }
+            }
+        }
+        }
+      }
+  - script: >
       pipelineJob('web') {
        definition {
         cpsScm {
