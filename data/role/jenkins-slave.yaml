@@ -70,6 +70,11 @@ psick::openssh::configs_hash:
         StrictHostKeyChecking: no
         UserKnownHostsFile: /dev/null
 
+      Host db-bootstrap.sshconfig:
+        IdentityFile: ~/.ssh/github-db-bootstrap-deploy-read
+        Hostname: github.com
+        StrictHostKeyChecking: no
+        UserKnownHostsFile: /dev/null
 
 psick::openssh::keypairs_hash:
   Administrator:
