@@ -5,5 +5,5 @@ psick::profiles::linux_classes:
 
 psick::puppet::gems::install_puppetserver_gems: true
 psick::puppet::autosign::autosign: 'on'
-psick::puppet::autosign::autosign_match: "*.%{::env_region}.graduway.com"
+psick::puppet::autosign::autosign_match: "*.%{::env_prefix}.graduway.com"
 psick::puppet::foss_master::enable_puppetdb_sslsetup: true
