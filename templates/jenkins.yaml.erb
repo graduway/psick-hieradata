@@ -18,7 +18,7 @@ jenkins:
   - "Ping"
   authorizationStrategy:
     globalMatrix:
-    grantedPermissions:
+      grantedPermissions:
 <% @options_hash['clients_rbac'].each do |roles_list| -%>
 <% roles_list.each do |users_list| -%>
 <% users_list[1].each do |user| -%>
@@ -142,7 +142,7 @@ security:
     enabled: false
 unclassified:
   location:
-    url: "http://localhost:8080/"
+    url: "http://jenkins.<%= @networking['domain'] %>:8080/"
 jobs:
   - script: >
       pipelineJob('db-bootstrap') {
