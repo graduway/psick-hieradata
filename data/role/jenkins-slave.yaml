@@ -7,6 +7,7 @@ psick::base::windows_classes:
   packages: psick::packages
   openssh: psick::openssh
   windows_env: psick::windows::envs
+  android: hieradata::android
 psick::profiles::windows_classes:
   features: psick::windows::features
   services: psick::windows::services
@@ -16,6 +17,20 @@ profile::route53::environment: "%{::env}"
 profile::route53::zone: 'graduway.com'
 profile::route53::hostname: "%{::role}"
 profile::route53::ip_address: "%{::ipaddress}"
+
+# Install adnroid sdk packages
+hieradata::android::sdk_packages:
+  - "platform-tools"
+  - "system-images;android-16;google_apis;x86"
+  - "system-images;android-15;default;armeabi-v7a"
+  - "system-images;android-14;default;armeabi-v7a"
+  - "system-images;android-10;default;armeabi-v7a"
+  - "system-images;android-10;default;x86"
+  - "system-images;android-10;google_apis;armeabi-v7a"
+  - "build-tools;19.1.0"
+  - "build-tools;26.0.0"
+  - "platforms;android-26"
+  - "platforms;android-27"
 
 # Do not try to install openssh on Windows via tp
 psick::openssh::tp::manage: false
@@ -41,6 +56,9 @@ psick::packages::packages_list:
   - "webdeploy"
   - "zip"
   - "openssh"
+  - "android-sdk"
+  - "gradle"
+  - "adoptopenjdk8"
 
 # SSH Key for WEB Github sync
 
