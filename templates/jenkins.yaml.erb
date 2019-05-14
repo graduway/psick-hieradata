@@ -169,7 +169,7 @@ jobs:
                    branches('refs/heads/antony-ci')
                  }
             }
-        }
+          }
         }
       }
   - script: >
@@ -183,6 +183,77 @@ jobs:
                    branches('refs/heads/antony-ci')
                  }
             }
+          }
+        }
+      }
+  - script: >
+      pipelineJob('build_all_frontend_mobile') {     
+       definition {
+        parameters {
+           booleanParam('upload')
+           choiceParam('track', ['internal', 'alpha', 'beta', 'production'])
+           credentialsParam('resolver_credentials') {
+             type('com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+             required()
+             defaultValue('resolver-auth')
+          }
+           credentialsParam('ionic_credentials') {
+             type('com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+             required()
+             defaultValue('ionic-auth')
+          }
+           credentialsParam('googleplay_credentials') {
+             type('com.google.jenkins.plugins.credentials.oauth.GoogleRobotPrivateKeyCredentials')    
+             required()
+             defaultValue('api-7277041141033059813-210766')
+          }
+           stringParam('build_job','build_frontend_android')
+         }
+         cpsScm {
+            scm {
+              git{ remote({
+                           url('git@frontend.sshconfig:graduway/frontend.git')
+                          })
+                   branches('refs/heads/master')
+                 }
+              
+            }
+        scriptPath('jenkins/build_all_frontend_mobile.groovy')
+          }
+        }
+      }
+  - script: >
+      pipelineJob('build_frontend_android') {
+       definition {
+        parameters {
+           booleanParam('upload')
+           stringParam('applicationid')
+           choiceParam('track', ['internal', 'alpha', 'beta', 'production'])
+           credentialsParam('resolver_credentials') {
+             type('com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+             required()
+             defaultValue('resolver-auth')
+          }
+           credentialsParam('ionic_credentials') {
+             type('com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+             required()
+             defaultValue('ionic-auth')
+          }
+           credentialsParam('googleplay_credentials') {
+             type('com.google.jenkins.plugins.credentials.oauth.GoogleRobotPrivateKeyCredentials')
+             required()
+             defaultValue('api-7277041141033059813-210766')
+          }
+        }
+        cpsScm {
+            scm {
+              git{ remote({
+                           url('git@frontend.sshconfig:graduway/frontend.git')
+                          })
+                   branches('refs/heads/master')
+                 }
+            }
+        scriptPath('jenkins/build_frontend_android.groovy')
         }
         }
       }
@@ -197,7 +268,7 @@ jobs:
                    branches('refs/heads/master')
                  }
             }
-        }
+          }
         }
       }
 
