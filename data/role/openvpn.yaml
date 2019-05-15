@@ -50,15 +50,19 @@ openvpn::client_defaults:
 openvpn::clients:
   'adi.efrat': {}
   'amir.algazi': {}
-  'alexei.krupnik': {}
   'antony.gelberg': {}
   'inna.azimov': {}
+  'janessa.goldberg': {}
   'kathy.davidovich': {}
   'liran.shabi': {}
+  'liora.sender': {}
   'vitalii.lukianenko':
     mail_address: "vitalii.lukianenko@automat-it.com"
   'michael.zaslavsky': {}
   'mor.smadja': {}
+  'moshe.nachmias': {}
+  'stephanie.goldshmid': {}
+  'talia.wolf': {}
   'udi.mazor': {}
 
 postfix::main_config:
