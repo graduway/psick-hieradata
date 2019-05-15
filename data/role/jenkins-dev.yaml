@@ -13,7 +13,7 @@ psick::jenkins::jcasc::options_hash:
   google_oauth_client_secret: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAcIxN+nBKlemIvN1k7nUah4K2PtcXHkgCC1PxzpppSO6jncM1+ROg3iu9FINA1gi3mdV7t7HanTqSZpbo+iq7PGRyvVbU2zAEMIg6DIvfYrUs0cvQ/X6Hw9lKDqjQmyjjDQy0/n0i5FwoifnrsGw5GXv5EKmWmadWtw9y7iEQa2hg0Gg1z6bc8cR2mCEuy03Ur/Ivg6EL63g0g0Dq7o6BBinxgxGnABHRam6VjzX7Mq13mKY913uq+zk1v7xWviOxnxhA/FV34xI1+u7J7IPhDMgSMCeCwIx+fIlEwPJVIFOK+45YF8/tda8WTjyqBz77pFgB1EDmRu9O3l+Ygn4YnjBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBWRFrn9F5I/stV31spQvo8gCAVQdpXih23CXwg/PwfSUmAAXGDI8iWUdLSVISJtko6PQ==]
   clients_rbac:
     - 'Overall/Administer':
-      - 'maxim.sternberg@automat-it.com'
+      - 'vitalii.lukianenko@automat-it.com'
       - 'oleg.yrchenko@automat-it.com'
       - 'antony.gelberg@graduway.com'
       - 'al@example42.com'

@@ -55,8 +55,8 @@ openvpn::clients:
   'inna.azimov': {}
   'kathy.davidovich': {}
   'liran.shabi': {}
-  'maxim.sternberg':
-    mail_address: "maxim.sternberg@automat-it.com"
+  'vitalii.lukianenko':
+    mail_address: "vitalii.lukianenko@automat-it.com"
   'michael.zaslavsky': {}
   'mor.smadja': {}
   'udi.mazor': {}
