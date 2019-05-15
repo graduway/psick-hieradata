@@ -43,10 +43,10 @@ openvpn::server_defaults:
 
 openvpn::client_defaults:
   server: 'graduway-vpn'
-  remote_host: "vpn.%{::env_region}.graduway.com"
+  remote_host: "vpn.%{::env_prefix}.graduway.com"
   mail_from: "noreply@graduway.com"
   mail_domain: "graduway.com"
-  environment: "%{::env_region}"
+  environment: "%{::env_prefix}"
 openvpn::clients:
   'adi.efrat': {}
   'amir.algazi': {}
@@ -67,7 +67,7 @@ openvpn::clients:
 
 postfix::main_config:
   myorigin: '$mydomain'
-  myhostname: "vpn.%{::env_region}.graduway.com"
+  myhostname: "vpn.%{::env_prefix}.graduway.com"
   mydomain: "graduway.com"
   append_dot_mydomain: "no"
   smtp_sasl_auth_enable: "yes"
