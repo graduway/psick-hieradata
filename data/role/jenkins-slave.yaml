@@ -208,3 +208,7 @@ psick::windows::envs::envs_hash:
     value: "%{::facts.ec2_tag_role}"
     mergemode: clobber
     user: 'Administrator'
+  'SLAVE_AAPT_TIMEOUT':
+    value: "30"
+    mergemode: clobber
+    user: 'Administrator'
