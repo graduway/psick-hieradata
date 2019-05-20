@@ -17,6 +17,24 @@ psick::jenkins::jcasc::options_hash:
       - 'oleg.yrchenko@automat-it.com'
       - 'antony.gelberg@graduway.com'
       - 'al@example42.com'
+    - 'Overall/Read':
+      - 'liora.sender@graduway.com'
+      - 'janessa.goldberg@graduway.com'
+      - 'moshe.nachmias@graduway.com'
+      - 'stephanie.goldshmid@graduway.com'
+      - 'talia.wolf@graduway.com'
+    - 'Job/Build':
+      - 'liora.sender@graduway.com'
+      - 'janessa.goldberg@graduway.com'
+      - 'moshe.nachmias@graduway.com'
+      - 'stephanie.goldshmid@graduway.com'
+      - 'talia.wolf@graduway.com'
+    - 'Job/Read':
+      - 'liora.sender@graduway.com'
+      - 'janessa.goldberg@graduway.com'
+      - 'moshe.nachmias@graduway.com'
+      - 'stephanie.goldshmid@graduway.com'
+      - 'talia.wolf@graduway.com'
 
 # Jenkins user ssh keys (TODO verify if was used only by scm-sync plugin)
 psick::jenkins::ssh_private_key_content: ENC[PKCS7,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]
