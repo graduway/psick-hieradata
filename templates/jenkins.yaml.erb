@@ -190,6 +190,7 @@ jobs:
       pipelineJob('build_all_frontend_mobile') {     
        definition {
         parameters {
+           stringParam('branch','master')
            booleanParam('upload')
            choiceParam('track', ['internal', 'alpha', 'beta', 'production'])
            credentialsParam('resolver_credentials') {
@@ -226,6 +227,7 @@ jobs:
       pipelineJob('build_frontend_android') {
        definition {
         parameters {
+           stringParam('branch','master')
            booleanParam('upload')
            stringParam('applicationid')
            choiceParam('track', ['internal', 'alpha', 'beta', 'production'])
