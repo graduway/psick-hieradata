@@ -3,10 +3,6 @@ tool:
     installations:
     - home: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin"
       name: "msbuild-vs2017buildtools-15"
-plugins:
-  sites:
-  - id: "default"
-    url: "https://updates.jenkins.io/update-center.json"
 jenkins:
   securityRealm:
     googleOAuth2:
@@ -61,7 +57,7 @@ jenkins:
             useHTTPS: false
         zone: "<%= @ec2_metadata['placement']['availability-zone'] %>"
         description: "windows-server-2012"
-        securityGroups: "<%= @options_hash['windows_slave_securityGroups'] %>"
+        securityGroups: "<%= @options_hash['windows_slave_securitygroups'] %>"
         remoteFS: "c:\\jenkins"
         type: "<%= @options_hash['windows_slave_type'] %>"
         ebsOptimized: false
@@ -137,6 +133,56 @@ jenkins:
           sc.exe config winrm start=auto
           net start winrm
           </powershell>
+      - ami: "<%= @options_hash['linux_slave_ami'] %>"
+        zone: "<%= @ec2_metadata['placement']['availability-zone'] %>"
+        description: "ubuntu-16.04"
+        securityGroups: "<%= @options_hash['linux_slave_securitygroups'] %>"
+        remoteFS: "/home/ubuntu"
+        type: "<%= @options_hash['linux_slave_type'] %>"
+        ebsOptimized: false
+        labelString: "ubuntu-16.04"
+        mode: "NORMAL"
+        initScript: |
+          #!/bin/bash
+          while [ ! -f /var/lib/cloud/instance/boot-finished ]; do
+            echo "Waiting for Cloud init"
+            sleep 150
+          done
+        tmpDir: ""
+        numExecutors: 3
+        remoteAdmin: "ubuntu"
+        subnetId: "<%= @ec2_metadata['network']['interfaces']['macs'][@ec2_metadata['network']['interfaces']['macs'].keys[0]]['subnet-id'] %>"
+        idleTerminationMinutes: "6000"
+        iamInstanceProfile: "arn:aws:iam::<%= @ec2_metadata['network']['interfaces']['macs'][@ec2_metadata['network']['interfaces']['macs'].keys[0]]['owner-id'] %>:instance-profile/jenkins-slave-dev"
+        deleteRootOnTermination: true
+        useEphemeralDevices: false
+        customDeviceMapping: "/dev/sda1=:125"
+        instanceCapStr: "2"
+        stopOnTerminate: false
+        usePrivateDnsName: false
+        associatePublicIp: false
+        useDedicatedTenancy: false
+        launchTimeoutStr: "0"
+        connectBySSHProcess: true
+        connectUsingPublicIp: false
+        tags:
+        <%- @options_hash['linux_slave_tags'].each do |tag, val| -%>
+        - name: "<%= tag %>"
+          value: "<%= val %>"
+        <%- end -%>
+        userData: |
+          #!/bin/bash
+          wget https://apt.puppetlabs.com/puppet6-release-xenial.deb
+          sudo dpkg -i puppet6-release-xenial.deb
+          flock --timeout 60 --exclusive --close /var/lib/dpkg/lock apt-get -y -o Dpkg::Options::="--force-confold" upgrade
+          if [ $? -ne 0 ]; then
+            echo "Another process has f-locked /var/lib/dpkg/lock" 1>&2
+            exit 1
+          fi
+          sudo apt update -y
+          sudo apt install puppet-agent -y
+          sudo /opt/puppetlabs/bin/puppet agent --onetime --verbose --no-daemonize --no-usecacheonfailure --no-splay --show_diff --server puppet
+          sudo /opt/puppetlabs/bin/puppet agent --onetime --verbose --no-daemonize --no-usecacheonfailure --no-splay --show_diff --server puppet
 security:
   remotingCLI:
     enabled: false
