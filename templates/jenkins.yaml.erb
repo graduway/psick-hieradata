@@ -149,7 +149,7 @@ jenkins:
             sleep 150
           done
         tmpDir: ""
-        numExecutors: 3
+        numExecutors: 4
         remoteAdmin: "ubuntu"
         subnetId: "<%= @ec2_metadata['network']['interfaces']['macs'][@ec2_metadata['network']['interfaces']['macs'].keys[0]]['subnet-id'] %>"
         idleTerminationMinutes: "6000"
@@ -157,7 +157,7 @@ jenkins:
         deleteRootOnTermination: true
         useEphemeralDevices: false
         customDeviceMapping: "/dev/sda1=:125"
-        instanceCapStr: "2"
+        instanceCapStr: "1"
         stopOnTerminate: false
         usePrivateDnsName: false
         associatePublicIp: false
