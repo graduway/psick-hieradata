@@ -138,3 +138,6 @@ psick::jenkins::plugins:
   # Google login
   google-login-plugin:
     enable: true
+  # Autoclean old builds
+  discard-old-build:
+    enable: true
