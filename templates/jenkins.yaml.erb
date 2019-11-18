@@ -137,7 +137,8 @@ jenkins:
         amiType:
           unixData:
             sshPort: "22"
-            slaveCommandPrefix: "sudo nice -n -5"
+            slaveCommandPrefix: "sudo nice -n -5  su -c '"
+            slaveCommandSuffix: "' ubuntu"
         zone: "<%= @ec2_metadata['placement']['availability-zone'] %>"
         description: "ubuntu-16.04"
         securityGroups: "<%= @options_hash['linux_slave_securitygroups'] %>"
