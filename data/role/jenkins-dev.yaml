@@ -11,7 +11,7 @@ psick::jenkins::jcasc::options_hash:
     Env: 'dev'
   linux_slave_ami: 'ami-07b4156579ea1d7ba'
   linux_slave_securitygroups: 'ssh-access, all-egress-dev, vpn-ingress-dev'
-  linux_slave_type: 'T3Xlarge'
+  linux_slave_type: 'M5Xlarge'
   linux_slave_tags:
     Name: 'jenkins-slave-ubuntu-dev'
     Role: 'jenkins-slave-ubuntu'
