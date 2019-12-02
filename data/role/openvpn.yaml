@@ -52,7 +52,6 @@ openvpn::clients:
   'amir.algazi': {}
   'antony.gelberg': {}
   'asher.hoffer': {}
-  'inna.azimov': {}
   'janessa.goldberg': {}
   'kathy.davidovich': {}
   'liran.shabi': {}
@@ -60,7 +59,6 @@ openvpn::clients:
   'vitalii.lukianenko':
     mail_address: "vitalii.lukianenko@automat-it.com"
   'michael.zaslavsky': {}
-  'moshe.nachmias': {}
   'talia.wolf': {}
   'udi.mazor': {}
 
