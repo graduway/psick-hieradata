@@ -26,19 +26,19 @@ psick::jenkins::jcasc::options_hash:
       - 'asher.hoffer@graduway.com'
       - 'al@example42.com'
     - 'Overall/Read':
+      - 'ali.veres@graduway.com'
       - 'liora.sender@graduway.com'
       - 'janessa.goldberg@graduway.com'
-      - 'moshe.nachmias@graduway.com'
       - 'talia.wolf@graduway.com'
     - 'Job/Build':
+      - 'ali.veres@graduway.com'
       - 'liora.sender@graduway.com'
       - 'janessa.goldberg@graduway.com'
-      - 'moshe.nachmias@graduway.com'
       - 'talia.wolf@graduway.com'
     - 'Job/Read':
+      - 'ali.veres@graduway.com'
       - 'liora.sender@graduway.com'
       - 'janessa.goldberg@graduway.com'
-      - 'moshe.nachmias@graduway.com'
       - 'talia.wolf@graduway.com'
 
 # Jenkins user ssh keys (TODO verify if was used only by scm-sync plugin)
