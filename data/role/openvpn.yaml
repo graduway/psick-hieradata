@@ -49,6 +49,7 @@ openvpn::client_defaults:
   environment: "%{::env_prefix}"
 openvpn::clients:
   'adi.efrat': {}
+  'ali.veres': {}
   'amir.algazi': {}
   'antony.gelberg': {}
   'asher.hoffer': {}
