@@ -26,17 +26,25 @@ psick::jenkins::jcasc::options_hash:
       - 'asher.hoffer@graduway.com'
       - 'al@example42.com'
     - 'Overall/Read':
-      - 'ali.veres@graduway.com'
+      - 'daniel.hanania@graduway.com'
       - 'liora.sender@graduway.com'
       - 'janessa.goldberg@graduway.com'
       - 'talia.wolf@graduway.com'
     - 'Job/Build':
-      - 'ali.veres@graduway.com'
+      - 'daniel.hanania@graduway.com'
       - 'liora.sender@graduway.com'
       - 'janessa.goldberg@graduway.com'
       - 'talia.wolf@graduway.com'
+    - 'Job/Configure':
+      - 'daniel.hanania@graduway.com'
+    - 'Job/Create':
+      - 'daniel.hanania@graduway.com'
+    - 'Job/Delete':
+      - 'daniel.hanania@graduway.com'
+    - 'Job/Discover':
+      - 'Anonymous'
     - 'Job/Read':
-      - 'ali.veres@graduway.com'
+      - 'daniel.hanania@graduway.com'
       - 'liora.sender@graduway.com'
       - 'janessa.goldberg@graduway.com'
       - 'talia.wolf@graduway.com'
