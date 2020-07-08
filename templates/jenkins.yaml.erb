@@ -186,6 +186,10 @@ jenkins:
           fi
           sudo apt update -y
           sudo apt install puppet-agent -y
+          sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk -V
+          sudo /opt/puppetlabs/puppet/bin/gem install ipaddress -V
+          sudo /opt/puppetlabs/puppet/bin/gem install ruby-pwsh -V
+          sudo /opt/puppetlabs/puppet/bin/gem install stdlib -V
           sudo /opt/puppetlabs/bin/puppet agent --onetime --verbose --no-daemonize --no-usecacheonfailure --no-splay --show_diff --server puppet
           sudo /opt/puppetlabs/bin/puppet agent --onetime --verbose --no-daemonize --no-usecacheonfailure --no-splay --show_diff --server puppet
 security:
