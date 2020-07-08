@@ -28,8 +28,10 @@ profile::android::android_sdk_tools:
   - "build-tools;19.1.0"
   - "build-tools;26.0.0"
   - "build-tools;26.0.2"
+  - "build-tools;28.0.3"
   - "platforms;android-26"
   - "platforms;android-27"
+  - "platforms;android-28"
 psick::openssh::configs_hash:
   jenkins-config:
     create_ssh_dir: true
